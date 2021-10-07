@@ -1,17 +1,22 @@
+##
+# Controller for `/channels` API methods, basic CRUD for <tt>Channel</tt> model.
+#
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: %i[ show update destroy ]
+  before_action :set_channel, only: %i[show update destroy]
 
+  ##
   # GET /channels
   # GET /channels.json
   def index
     @channels = Channel.all
   end
 
+  ##
   # GET /channels/1
   # GET /channels/1.json
-  def show
-  end
+  def show; end
 
+  ##
   # POST /channels
   # POST /channels.json
   def create
@@ -24,6 +29,7 @@ class ChannelsController < ApplicationController
     end
   end
 
+  ##
   # PATCH/PUT /channels/1
   # PATCH/PUT /channels/1.json
   def update
@@ -34,6 +40,7 @@ class ChannelsController < ApplicationController
     end
   end
 
+  ##
   # DELETE /channels/1
   # DELETE /channels/1.json
   def destroy
@@ -41,13 +48,16 @@ class ChannelsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_channel
-      @channel = Channel.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def channel_params
-      params.require(:channel).permit(:name, :description)
-    end
+  ##
+  # Use callbacks to share common setup or constraints between actions.
+  def set_channel
+    @channel = Channel.find(params[:id])
+  end
+
+  ##
+  # Only allow a list of trusted parameters through.
+  def channel_params
+    params.require(:channel).permit(:name, :description)
+  end
 end

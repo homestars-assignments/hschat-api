@@ -1,17 +1,22 @@
+##
+# Controller for `/users` API methods, basic CRUD for <tt>User</tt> model.
+#
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[ show update destroy ]
+  before_action :set_user, only: %i[show update destroy]
 
+  ##
   # GET /users
   # GET /users.json
   def index
     @users = User.all
   end
 
+  ##
   # GET /users/1
   # GET /users/1.json
-  def show
-  end
+  def show; end
 
+  ##
   # POST /users
   # POST /users.json
   def create
@@ -24,6 +29,7 @@ class UsersController < ApplicationController
     end
   end
 
+  ##
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
@@ -34,6 +40,7 @@ class UsersController < ApplicationController
     end
   end
 
+  ##
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
@@ -41,13 +48,16 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def user_params
-      params.require(:user).permit(:name, :email, :bio)
-    end
+  ##
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find(params[:id])
+  end
+
+  ##
+  # Only allow a list of trusted parameters through.
+  def user_params
+    params.require(:user).permit(:name, :email, :bio)
+  end
 end

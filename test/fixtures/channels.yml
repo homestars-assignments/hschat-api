@@ -1,9 +1,13 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  description: MyText
+announcements:
+  name: Announcements
+  description: This channel is for team-wide communication and announcements.
 
-two:
-  name: MyString
-  description: MyText
+coding:
+  name: Coding
+  description: Ask coding question, talk about codes.
+
+random:
+  name: Random
+  description: Chat about random things that aren't better suited to #coding, #ops, #security, etc.

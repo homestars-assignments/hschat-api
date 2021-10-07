@@ -1,34 +1,40 @@
-require "test_helper"
+require 'test_helper'
 
 class ChannelsControllerTest < ActionDispatch::IntegrationTest
+  self.use_instantiated_fixtures = true # Refer as local variables to all items in fixtures...
+
   setup do
-    @channel = channels(:one)
+    @channel = @announcements
   end
 
-  test "should get index" do
+  test 'should get index' do
     get channels_url, as: :json
     assert_response :success
   end
 
-  test "should create channel" do
+  test 'should create channel' do
     assert_difference('Channel.count') do
-      post channels_url, params: { channel: { description: @channel.description, name: @channel.name } }, as: :json
+      name = 'frontend'
+      description = 'html, css, js, design, and other fun user-facing stuff'
+
+      post channels_url, params: { channel: { description: description, name: name } }, as: :json
     end
 
     assert_response 201
   end
 
-  test "should show channel" do
+  test 'should show channel' do
     get channel_url(@channel), as: :json
     assert_response :success
   end
 
-  test "should update channel" do
-    patch channel_url(@channel), params: { channel: { description: @channel.description, name: @channel.name } }, as: :json
+  test 'should update channel' do
+    patch channel_url(@channel), params: { channel: { description: @channel.description, name: @channel.name } },
+                                 as: :json
     assert_response 200
   end
 
-  test "should destroy channel" do
+  test 'should destroy channel' do
     assert_difference('Channel.count', -1) do
       delete channel_url(@channel), as: :json
     end

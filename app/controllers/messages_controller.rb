@@ -1,17 +1,22 @@
+##
+# Controller for `/messages` API methods, basic CRUD for <tt>Message</tt> model.
+#
 class MessagesController < ApplicationController
-  before_action :set_message, only: %i[ show update destroy ]
+  before_action :set_message, only: %i[show update destroy]
 
+  ##
   # GET /messages
   # GET /messages.json
   def index
     @messages = Message.all
   end
 
+  ##
   # GET /messages/1
   # GET /messages/1.json
-  def show
-  end
+  def show; end
 
+  ##
   # POST /messages
   # POST /messages.json
   def create
@@ -24,16 +29,18 @@ class MessagesController < ApplicationController
     end
   end
 
+  ##
   # PATCH/PUT /messages/1
   # PATCH/PUT /messages/1.json
   def update
-    if @message.update(message_params)
+    if @message.update(updatable_message_params)
       render :show, status: :ok, location: @message
     else
       render json: @message.errors, status: :unprocessable_entity
     end
   end
 
+  ##
   # DELETE /messages/1
   # DELETE /messages/1.json
   def destroy
@@ -41,13 +48,23 @@ class MessagesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_message
-      @message = Message.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def message_params
-      params.require(:message).permit(:body, :user_id)
-    end
+  ##
+  # Use callbacks to share common setup or constraints between actions.
+  def set_message
+    @message = Message.find(params[:id])
+  end
+
+  ##
+  # Only allow a list of trusted parameters through.
+  def message_params
+    params.require(:message).permit(:body, :user_id, :targetable_type, :targetable_id)
+  end
+
+  ##
+  # Only allow a list of trusted parameters through.
+  def updatable_message_params
+    # Only allows to update message content, not sender nor target.
+    params.require(:message).permit(:body)
+  end
 end

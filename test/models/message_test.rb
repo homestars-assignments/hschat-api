@@ -1,7 +1,7 @@
-require "test_helper"
+require 'test_helper'
 
 class MessageTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  test 'All test messages should be loaded' do
+    assert_equal(Message.all.length, 23)
+  end
 end

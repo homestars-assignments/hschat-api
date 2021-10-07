@@ -1,11 +1,16 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  name: MyString
-  email: MyString
-  bio: MyString
+kimura:
+  name: kobaltz
+  email: Dave.Kimura@email.com
+  bio: Christian, Husband, Father and Rubyist, Screencaster of @driftingruby.
 
-two:
-  name: MyString
-  email: MyString
-  bio: MyString
+castello:
+  name: matugm
+  email: Jesus.Castello@email.com
+  bio: Ruby developer & teacher. Check out my blog! https://rubyguides.com
+
+nate:
+  name: nateberkopec
+  email: Nate.Berkopec@email.com
+  bio: Author, The Complete Guide to Rails Performance. Co-maintainer of Puma.

@@ -1,9 +1,23 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  body: MyString
-  user: one
+msg1:
+  body: "Announcing: The Ruby on Rails Performance Apocrypha. A book that introduces performance engineering, frontend and Ruby perf, and scaling. It's available now for just $10 on Gumroad, DRM-free: https://gum.co/apocrypha"
+  user: kimura
+  targetable: announcements (Channel)
 
-two:
-  body: MyString
-  user: two
+msg2:
+  body: "I think the bigger issue here is that so many people noticed that Facebook went down."
+  user: kimura
+  targetable: random (Channel)
+
+msg3:
+  body: "I think the bigger issue here is that so many people noticed that Facebook went down."
+  user: castello
+  targetable: kimura (User)
+
+<% 1.upto(20) do |i| %>
+msg<%= 3+i %>:
+  body: "<%= i %> Eros cras ante ligula elementum. Tortor duis tempus dis."
+  user: nate
+  targetable: coding (Channel)
+<% end %>
