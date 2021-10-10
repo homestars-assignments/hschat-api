@@ -2,15 +2,21 @@
 
 kimura:
   name: kobaltz
+  username: kobaltz
   email: Dave.Kimura@email.com
   bio: Christian, Husband, Father and Rubyist, Screencaster of @driftingruby.
+  password_digest: $2a$12$MYv41dkc0J.6Sj4jASCS/.4ojHf/9Im97DBaX3jmZiDfz4jq75Q4m
 
 castello:
   name: matugm
+  username: matugm
   email: Jesus.Castello@email.com
   bio: Ruby developer & teacher. Check out my blog! https://rubyguides.com
+  password_digest: $2a$12$MYv41dkc0J.6Sj4jASCS/.4ojHf/9Im97DBaX3jmZiDfz4jq75Q4m
 
 nate:
   name: nateberkopec
+  username: nateberkopec
   email: Nate.Berkopec@email.com
   bio: Author, The Complete Guide to Rails Performance. Co-maintainer of Puma.
+  password_digest: $2a$12$MYv41dkc0J.6Sj4jASCS/.4ojHf/9Im97DBaX3jmZiDfz4jq75Q4m

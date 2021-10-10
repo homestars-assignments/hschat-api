@@ -2,47 +2,45 @@
 # Controller for `/users` API methods, basic CRUD for <tt>User</tt> model.
 #
 class UsersController < ApplicationController
-  before_action :set_user, only: %i[show update destroy]
+  before_action :authorize, except: :create
+  before_action :set_user, except: %i[create index]
 
   ##
   # GET /users
-  # GET /users.json
   def index
     @users = User.all
   end
 
   ##
-  # GET /users/1
-  # GET /users/1.json
+  # GET /users/<username>
   def show; end
 
   ##
   # POST /users
-  # POST /users.json
   def create
-    @user = User.new(user_params)
+    protect_parameter_missing do
+      @user = User.new(user_params)
 
-    if @user.save
-      render :show, status: :created, location: @user
-    else
-      render json: @user.errors, status: :unprocessable_entity
+      if @user.save
+        render json: @user, status: :created, location: @user unless performed?
+      else
+        render_error(:unprocessable_entity, nil, @user.errors) unless performed?
+      end
     end
   end
 
   ##
-  # PATCH/PUT /users/1
-  # PATCH/PUT /users/1.json
+  # PATCH/PUT /users/<username>
   def update
     if @user.update(user_params)
       render :show, status: :ok, location: @user
     else
-      render json: @user.errors, status: :unprocessable_entity
+      render_error(:unprocessable_entity, nil, @user.errors)
     end
   end
 
   ##
-  # DELETE /users/1
-  # DELETE /users/1.json
+  # DELETE /users/<username>
   def destroy
     @user.destroy
   end
@@ -51,13 +49,17 @@ class UsersController < ApplicationController
 
   ##
   # Use callbacks to share common setup or constraints between actions.
+  #
   def set_user
-    @user = User.find(params[:id])
+    @user = User.find_by_username(params[:_username])
+  rescue ActiveRecord::RecordNotFound => e
+    render_error(:not_found, e)
   end
 
   ##
   # Only allow a list of trusted parameters through.
+  #
   def user_params
-    params.require(:user).permit(:name, :email, :bio)
+    params.permit(:username, :name, :email, :bio, :password, :password_confirmation)
   end
 end

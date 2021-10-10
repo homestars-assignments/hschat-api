@@ -31,3 +31,5 @@
 /config/master.key
 /.idea
 .vscode/settings.json
+
+/config/credentials/production.key

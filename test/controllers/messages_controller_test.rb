@@ -13,15 +13,19 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     @new_pv_message.targetable = @nate
     @new_pv_message.user = @kimura
 
-    # New messate to a channel
+    # New message to a channel
     @new_message = Message.new
     @new_message.body = '📢  Id habitant pulvinar tortor sociosqu sit massa aliquet malesuada sodales eleifend mi primis?'
     @new_message.targetable = @random
     @new_message.user = @kimura
   end
 
+  def parent_channel
+    { 'channel_id': @announcements.id }
+  end
+
   test 'should get index' do
-    get messages_url, as: :json
+    get channel_messages_url(@announcements), params: parent_channel, headers: auth, as: :json
     assert_response :success
   end
 
@@ -41,37 +45,23 @@ class MessagesControllerTest < ActionDispatch::IntegrationTest
     }
   end
 
-  test 'should create message to user' do
-    assert_difference('Message.count') do
-      post messages_url, params: message_params(@new_pv_message), as: :json
-    end
-
-    assert_response 201
-  end
-
   test 'should create message to channel' do
     assert_difference('Message.count') do
-      post messages_url, params: message_params(@new_message), as: :json
+      post channel_messages_url(@announcements),
+           params: parent_channel.merge({ 'body': @new_message.body }),
+           headers: auth, as: :json
     end
 
     assert_response 201
   end
 
   test 'should show message' do
-    get message_url(@message), as: :json
+    get message_url(@message), headers: auth, as: :json
     assert_response :success
   end
 
   test 'should update message' do
-    patch message_url(@message), params: {message: {body: @message.body, user_id: @message.user_id}}, as: :json
+    patch message_url(@message), params: { message: { body: @message.body, user_id: @message.user_id } }, headers: auth, as: :json
     assert_response 200
-  end
-
-  test 'should destroy message' do
-    assert_difference('Message.count', -1) do
-      delete message_url(@message), as: :json
-    end
-
-    assert_response 204
   end
 end

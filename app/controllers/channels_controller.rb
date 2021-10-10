@@ -2,19 +2,50 @@
 # Controller for `/channels` API methods, basic CRUD for <tt>Channel</tt> model.
 #
 class ChannelsController < ApplicationController
-  before_action :set_channel, only: %i[show update destroy]
+  before_action :authorize
+  before_action :set_channel, only: %i[show update destroy join leave]
 
   ##
   # GET /channels
-  # GET /channels.json
   def index
-    @channels = Channel.all
+    received_param = filter_params[:joined]
+    show_joined_channels = received_param && received_param[:joined] == 'true'
+    @channels = Channel.all unless show_joined_channels
+    @channels = @current_user.channels if show_joined_channels
   end
 
   ##
   # GET /channels/1
   # GET /channels/1.json
   def show; end
+
+  ##
+  # POST /channels/1/join
+  def join
+    if !@current_user.channels.include?(@channel)
+      @current_user.channels << @channel
+      render :show, status: :ok, location: @channel
+    else
+      render_error(:bad_request, StandardError.new('Already joined'))
+    end
+  rescue StandardError => e
+    render_error(:bad_request, e, @current_user.errors)
+  end
+
+  ##
+  # POST /channels/1/leave
+  def leave
+    Rails.logger.debug('--> To be or not to be')
+    Rails.logger.debug(@current_user.channels.include?(@channel))
+    if @current_user.channels.include?(@channel)
+      @current_user.channels.delete(@channel)
+      render :show, status: :ok, location: @channel
+    else
+      render_error(:bad_request, StandardError.new('Not joined to selected channel'))
+    end
+  rescue StandardError => e
+    render_error(:bad_request, e, @current_user.errors)
+  end
 
   ##
   # POST /channels
@@ -59,5 +90,12 @@ class ChannelsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def channel_params
     params.require(:channel).permit(:name, :description)
+  end
+
+  ##
+  # Expect optional <tt>joined</tt> parameter in params of controller.
+  #
+  def filter_params
+    params.permit(:joined)
   end
 end

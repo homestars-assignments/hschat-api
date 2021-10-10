@@ -1,24 +1,41 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Ruby 3.0.2, Rails 6.1.4, and **sqlite3** as database for active record.
 
-Things you may want to cover:
+## Configuration
 
-* Ruby version
+* Establish environment with usual `RAILS_ENV` environment variable or will be `development` by default.
 
-* System dependencies
+* Optionally relocate database as usual with `DATABASE_URL` environment variable or files will be located according to active ralis environment in one of:
+  * `📁./db/development.sqlite3`.
+  * `📁./db/test.sqlite3`.
+  * `📁./db/production.sqlite3`.
+  
+* Create database executing:
+  * `> rails db:create`
+  * `> rails db:migrate`
 
-* Configuration
+* Run tests by executing:
 
-* Database creation
+  `> rails test`
+  
+* Run the application locally with
 
-* Database initialization
+  ```bash
+  bundle install
+  bundle exec rails server -b 0.0.0.0
+  ```
 
-* How to run the test suite
+## Usage
 
-* Services (job queues, cache servers, search engines, etc.)
+Summary list with the main operations:
 
-* Deployment instructions
-
-* ...
+```ruby
+GET  /messages # list messages
+POST /messages { <message json> } # to create a message
+GET  /messages/:id 
+ 
+PATCH or PUT /messages/:id(.:format)
+DELETE /messages/:id(.:format)
+....
+```
