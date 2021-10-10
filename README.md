@@ -28,14 +28,5 @@ Ruby 3.0.2, Rails 6.1.4, and **sqlite3** as database for active record.
 
 ## Usage
 
-Summary list with the main operations:
+For demostrative purpose and easing the review, if you browse to the API with a browser you'll be redirected to the public folder api-doc where you can see the list of operations implemented and code samples for execution. Notice the order of operations, you'll need to start by login or signup and login to obtain a token to use with the rest of the operations.
 
-```ruby
-GET  /messages # list messages
-POST /messages { <message json> } # to create a message
-GET  /messages/:id 
- 
-PATCH or PUT /messages/:id(.:format)
-DELETE /messages/:id(.:format)
-....
-```
