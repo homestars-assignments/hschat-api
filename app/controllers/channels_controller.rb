@@ -9,7 +9,7 @@ class ChannelsController < ApplicationController
   # GET /channels
   def index
     received_param = filter_params[:joined]
-    show_joined_channels = received_param && received_param[:joined] == 'true'
+    show_joined_channels = received_param == 'true'
     @channels = Channel.all unless show_joined_channels
     @channels = @current_user.channels if show_joined_channels
   end
@@ -35,8 +35,6 @@ class ChannelsController < ApplicationController
   ##
   # POST /channels/1/leave
   def leave
-    Rails.logger.debug('--> To be or not to be')
-    Rails.logger.debug(@current_user.channels.include?(@channel))
     if @current_user.channels.include?(@channel)
       @current_user.channels.delete(@channel)
       render :show, status: :ok, location: @channel

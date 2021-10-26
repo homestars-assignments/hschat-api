@@ -12,6 +12,28 @@ class ChannelsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test 'should return unauthorized without token' do
+    get channels_url, as: :json
+    assert_response :unauthorized
+  end
+
+  test 'should list only matched joined channels' do
+    get channels_url + '?joined=true', headers: auth, as: :json
+    channels = @response.parsed_body
+    assert_equal channels.length, 2 # <-- user.channels.length
+    # user.channels.each  do |channel| channels.included?(channel) end
+    assert_equal channels[0]['name'], 'Announcements'
+    assert_equal channels[1]['name'], 'Coding'
+  end
+
+  # TODO: Write tests for
+  # - Get the index withouth auth.
+  # - Get the index with variants for the joined parameter (true/false), also with wrong values.
+  # - Performance:
+  #   - ...
+  # - 2 differents users asking for their joined channels.
+  # - ...
+
   test 'should create channel' do
     assert_difference('Channel.count') do
       name = 'frontend'

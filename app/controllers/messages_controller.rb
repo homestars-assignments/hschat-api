@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
   def index
     render_invalid_parent and return unless parent_object
 
-    @messages = parent_object.messages if parent_object
+    @messages = parent_object.messages.includes(:user) if parent_object
   end
 
   ##

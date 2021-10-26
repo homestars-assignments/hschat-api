@@ -6,6 +6,9 @@ kimura:
   email: Dave.Kimura@email.com
   bio: Christian, Husband, Father and Rubyist, Screencaster of @driftingruby.
   password_digest: $2a$12$MYv41dkc0J.6Sj4jASCS/.4ojHf/9Im97DBaX3jmZiDfz4jq75Q4m
+  channels: [ 
+    announcements, coding
+  ]
 
 castello:
   name: matugm
